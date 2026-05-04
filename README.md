@@ -2,20 +2,20 @@
 
 ---
 
-## 📌 Overview
+## Overview
 This project demonstrates an end-to-end CI/CD pipeline using Jenkins, Docker, and GitHub.  
 It follows a multi-service architecture with a centralized Jenkins Shared Library to reuse pipeline logic.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ![CI/CD Architecture](./architecture/ci-cd-architecture.png)
 
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 - Jenkins → CI/CD automation  
 - Docker → Containerization  
 - GitHub → Source control  
@@ -24,7 +24,7 @@ It follows a multi-service architecture with a centralized Jenkins Shared Librar
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 service-a/
 service-b/
 service-c/
@@ -35,7 +35,7 @@ docs/
 
 ---
 
-## ⚙️ Jenkins Shared Library
+## Jenkins Shared Library
 A centralized pipeline library is used to:
 - Build applications  
 - Run tests  
@@ -45,7 +45,7 @@ This reduces duplication and improves maintainability across services.
 
 ---
 
-## 🔄 CI/CD Flow
+## CI/CD Flow
 1. Code pushed to GitHub  
 2. Jenkins triggers pipeline  
 3. Build stage (Maven)  
@@ -55,7 +55,7 @@ This reduces duplication and improves maintainability across services.
 
 ---
 
-## 🚀 Key Features
+## Key Features
 - Multi-service architecture  
 - Reusable Jenkins Shared Library  
 - Automated CI/CD pipeline  
