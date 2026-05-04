@@ -1,6 +1,7 @@
 # 🚀 Microservices CI/CD Pipeline with Jenkins Shared Library
 
-A complete **CI/CD pipeline for microservices** using a **Jenkins Shared Library** — one reusable template that powers all services automatically from code push to container deployment.
+A complete **end-to-end CI/CD pipeline** for microservices using a **Jenkins Shared Library**.
+This project demonstrates how to automate the full lifecycle from **code commit → build → containerization → deployment on AWS ECR**.
 
 ---
 
@@ -8,26 +9,42 @@ A complete **CI/CD pipeline for microservices** using a **Jenkins Shared Library
 
 ![CI/CD Architecture](./architecture/ci-cd-architecture.png)
 
-### 🔗 Integrated Components
+### 🔗 Components Explained
 
-* GitHub → Source code hosting & webhook trigger
-* Jenkins → CI/CD automation
-* Jenkins Shared Library → Reusable pipeline template
-* Docker → Image build & container runtime
-* Amazon ECR → Private Docker registry
-* Deployment Server (VM / EC2) → Runs containers
+* GitHub
+  Hosts the source code for each microservice and triggers the pipeline via webhook.
+
+* Jenkins
+  Executes the CI/CD pipeline and orchestrates all stages.
+
+* Jenkins Shared Library
+  Contains reusable pipeline logic (`pipelineTemplate.groovy`) to avoid duplication.
+
+* Docker
+  Builds container images and runs services as containers.
+
+* Amazon ECR
+  Stores Docker images securely in the cloud.
+
+* Deployment Server (VM / EC2)
+  Runs the final containers and exposes applications on different ports.
 
 ---
 
-## ⚙️ How It Works
+## ⚙️ How the Pipeline Works (Detailed Flow)
 
-1. Developer pushes code to any service repository
+1. Developer pushes code to a service repository
 2. GitHub webhook triggers Jenkins automatically
-3. Jenkins loads the Shared Library (`jenkins-shared-library`)
-4. The pipelineTemplate() function runs dynamically
-5. All CI/CD stages execute
-6. Docker image is built and pushed to ECR
-7. Container is deployed and exposed on a unique port
+3. Jenkins loads the shared library
+4. The pipeline starts executing stages:
+
+   * Build & test the application
+   * Package the JAR file
+   * Build Docker image
+   * Authenticate with AWS ECR
+   * Push image to ECR
+   * Deploy container
+5. Application becomes accessible via browser
 
 ---
 
@@ -39,7 +56,7 @@ A complete **CI/CD pipeline for microservices** using a **Jenkins Shared Library
 pipelineTemplate(
     imageName: 'service-a',
     imageTag:  'v1.0',
-    port:      '8081',
+    port:      '8082',
     region:    'us-east-1',
     accountId: '123456789012',
     ecrRepo:   'service-a'
@@ -48,42 +65,42 @@ pipelineTemplate(
 
 ---
 
-## 🔧 Dynamic Parameters
+## 🔧 Dynamic Parameters (Explained)
 
-| Parameter | Description           |
-| --------- | --------------------- |
-| imageName | Docker image name     |
-| imageTag  | Image version         |
-| port      | Host port for service |
-| region    | AWS region            |
-| accountId | AWS account ID        |
-| ecrRepo   | ECR repository name   |
+| Parameter | Description                                |
+| --------- | ------------------------------------------ |
+| imageName | Name of the Docker image                   |
+| imageTag  | Version of the image                       |
+| port      | Host machine port (used to expose service) |
+| region    | AWS region where ECR is hosted             |
+| accountId | AWS account ID                             |
+| ecrRepo   | Name of ECR repository                     |
 
 ---
 
-## 🏗️ Pipeline Stages
+## 🏗️ Pipeline Stages (Step-by-Step)
 
-| # | Stage        | Tool    | Description         |
-| - | ------------ | ------- | ------------------- |
-| 1 | Checkout     | Git     | Clone repository    |
-| 2 | Compile      | Maven   | `mvn clean compile` |
-| 3 | Test         | Maven   | Run unit tests      |
-| 4 | Package      | Maven   | Build JAR           |
-| 5 | Docker Build | Docker  | Build image         |
-| 6 | Login ECR    | AWS CLI | Authenticate        |
-| 7 | Tag Image    | Docker  | Tag for ECR         |
-| 8 | Push Image   | Docker  | Push to ECR         |
-| 9 | Deploy       | Docker  | Run container       |
+| # | Stage        | Description                            |
+| - | ------------ | -------------------------------------- |
+| 1 | Checkout     | Retrieves source code from GitHub      |
+| 2 | Compile      | Compiles Java code using Maven         |
+| 3 | Test         | Runs unit tests to ensure code quality |
+| 4 | Package      | Builds the `.jar` file                 |
+| 5 | Docker Build | Creates Docker image                   |
+| 6 | Login to ECR | Authenticates using AWS CLI            |
+| 7 | Tag Image    | Tags image for ECR                     |
+| 8 | Push Image   | Pushes image to ECR                    |
+| 9 | Deploy       | Runs container on server               |
 
 ---
 
 ## 📦 Microservices & Ports
 
-| Service   | Port | URL                   |
+| Service   | Port | Access URL            |
 | --------- | ---- | --------------------- |
-| service-a | 8081 | http://localhost:8081 |
-| service-b | 8082 | http://localhost:8082 |
-| service-c | 8083 | http://localhost:8083 |
+| service-a | 8082 | http://localhost:8082 |
+| service-b | 8083 | http://localhost:8083 |
+| service-c | 8084 | http://localhost:8084 |
 
 ---
 
@@ -98,11 +115,12 @@ jenkins-shared-library/
 
 ---
 
-## 🔧 Jenkins Setup
+## 🔧 Jenkins Setup (Detailed)
 
 ### 1. Register Shared Library
 
-Manage Jenkins → System → Global Pipeline Libraries
+Go to:
+`Manage Jenkins → System → Global Pipeline Libraries`
 
 | Field           | Value                                                 |
 | --------------- | ----------------------------------------------------- |
@@ -112,11 +130,11 @@ Manage Jenkins → System → Global Pipeline Libraries
 
 ---
 
-### 2. Create Pipeline Jobs
+### 2. Create Pipeline Job
 
 * New Item → Pipeline
 * Definition → Pipeline script from SCM
-* Repository → service repo
+* Repository → Service repo
 * Branch → `main`
 * Script Path → Jenkinsfile
 
@@ -124,14 +142,10 @@ Manage Jenkins → System → Global Pipeline Libraries
 
 ### 3. Add AWS Credentials
 
-Manage Jenkins → Credentials
-
-| Field      | Value           |
-| ---------- | --------------- |
-| Kind       | AWS Credentials |
-| ID         | aws-creds       |
-| Access Key | your key        |
-| Secret Key | your secret     |
+| Field | Value           |
+| ----- | --------------- |
+| Kind  | AWS Credentials |
+| ID    | aws-creds       |
 
 ---
 
@@ -143,17 +157,17 @@ Manage Jenkins → Credentials
    * service-b
    * service-c
 
-2. Repository URI format:
+2. Example Repository URI:
 
 ```
-<account-id>.dkr.ecr.<region>.amazonaws.com/<repo-name>
+123456789012.dkr.ecr.us-east-1.amazonaws.com/service-a
 ```
 
 ---
 
 ## 🐳 Deployment Strategy
 
-Each service runs as a container:
+Each service runs as an isolated Docker container:
 
 ```bash
 docker run -d -p HOST_PORT:8080 IMAGE
@@ -162,8 +176,42 @@ docker run -d -p HOST_PORT:8080 IMAGE
 Example:
 
 ```bash
-docker run -d -p 8081:8080 service-a
+docker run -d -p 8082:8080 service-a
 ```
+
+---
+
+## 🧪 Verification & Testing
+
+### ✅ 1. Check Running Containers
+
+Add screenshot here:
+
+```text
+![Docker Containers](./screenshots/docker-ps.png)
+```
+
+Command used:
+
+```bash
+docker ps
+```
+
+---
+
+### ✅ 2. Verify Application in Browser
+
+Add screenshot here:
+
+```text
+![Application Running](./screenshots/app-running.png)
+```
+
+Test URLs:
+
+* http://localhost:8082
+* http://localhost:8083
+* http://localhost:8084
 
 ---
 
@@ -171,7 +219,7 @@ docker run -d -p 8081:8080 service-a
 
 | Tool       | Purpose            |
 | ---------- | ------------------ |
-| Jenkins    | CI/CD              |
+| Jenkins    | CI/CD automation   |
 | Groovy     | Pipeline scripting |
 | GitHub     | Source control     |
 | Maven      | Build tool         |
@@ -182,24 +230,26 @@ docker run -d -p 8081:8080 service-a
 
 ---
 
-## 💡 Key Concepts
+## 💡 Key Concepts Demonstrated
 
-* ✅ Shared Library (Reusable pipelines)
-* ✅ Dynamic configuration per service
-* ✅ Multi-service architecture
-* ✅ Docker lifecycle automation
-* ✅ CI/CD automation with Jenkins
-* ✅ AWS ECR integration
+* ✅ Reusable Shared Library
+* ✅ Dynamic pipeline parameters
+* ✅ Multi-service CI/CD
+* ✅ Docker-based deployment
+* ✅ AWS integration
+* ✅ Automated testing
 
 ---
 
 ## 🚀 Future Improvements
 
-* Kubernetes deployment (EKS)
-* Auto rollback strategy
-* Blue/Green deployment
-* Monitoring (Prometheus + Grafana)
+* Kubernetes (EKS) deployment
+* CI/CD pipeline monitoring
+* Auto-scaling services
+* Blue/Green deployment strategy
 
 ---
 
-*Built as a real-world DevOps lab demonstrating CI/CD pipelines, containerization, and cloud deployment using Jenkins & AWS.*
+## 👩‍💻 Author
+
+Built as a hands-on DevOps lab to demonstrate real-world CI/CD practices.
