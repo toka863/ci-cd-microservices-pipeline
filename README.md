@@ -1,17 +1,18 @@
-🚀 CI/CD Microservices Pipeline Project
+#CI/CD Microservices Pipeline Project
 📌 Overview
 
 This project demonstrates an end-to-end CI/CD pipeline using Jenkins, Docker, and GitHub. It follows a multi-service architecture with a centralized Jenkins Shared Library to reuse pipeline logic.
 
-🏗️ Architecture
+#Architecture
 
-🧰 Tech Stack
+#Tech Stack
 Jenkins (CI/CD automation)
 Docker (containerization)
 GitHub (source control)
 Maven (build tool)
 Linux environment
-📁 Project Structure
+
+#Project Structure
 service-a/  
 service-b/  
 service-c/  
@@ -28,7 +29,7 @@ Build Docker images
 
 This reduces duplication across services and improves maintainability.
 
-🚀 CI/CD Flow
+#CI/CD Flow
 Code pushed to GitHub
 Jenkins triggers pipeline
 Build stage (Maven)
