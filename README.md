@@ -7,7 +7,7 @@ This project demonstrates how to automate the full lifecycle from **code commit 
 
 ## 📌 Architecture Overview
 
-![CI/CD Architecture](./images/ci-cd-architecture.png.png)
+![CI/CD Architecture](./images/architecture.png)
 
 ### 🔗 Components Explained
 
