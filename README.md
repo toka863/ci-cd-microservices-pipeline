@@ -185,11 +185,8 @@ docker run -d -p 8082:8080 service-a
 
 ### ✅ 1. Check Running Containers
 
-Add screenshot here:
 
-```text
-![images](./images/docker-ps.png)
-```
+![Docker PS](images/docker-ps.png)
 
 Command used:
 
@@ -201,11 +198,9 @@ docker ps
 
 ### ✅ 2. Verify Application in Browser
 
-Add screenshot here:
 
-```text
 ![images](./images/app-running.png)
-```
+
 
 Test URLs:
 
