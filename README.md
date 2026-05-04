@@ -10,7 +10,7 @@ It follows a multi-service architecture with a centralized Jenkins Shared Librar
 
 ## 🏗️ Architecture
 
-> Add your architecture image here:
+![CI/CD Architecture](./architecture/ci-cd-architecture.png)
 
 
 ---
