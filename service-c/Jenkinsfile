@@ -1,7 +1,7 @@
 @Library('jenkins-shared-library') _
 
 pipelineTemplate(
-    repo: 'https://github.com/toka863/service-c.git',
+    repo: 'https://github.com/GamatronAI/learnbyexample.git',
     imageName: 'service-c',
     imageTag: 'v1',
     port: '8084',
