@@ -188,7 +188,7 @@ docker run -d -p 8082:8080 service-a
 Add screenshot here:
 
 ```text
-![Docker Containers](./images/docker-ps.png)
+![images](./images/docker-ps.png)
 ```
 
 Command used:
@@ -204,7 +204,7 @@ docker ps
 Add screenshot here:
 
 ```text
-![Application Running](./images/app-running.png)
+![images](./images/app-running.png)
 ```
 
 Test URLs:
