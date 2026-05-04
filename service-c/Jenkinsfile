@@ -1,0 +1,12 @@
+@Library('jenkins-shared-library') _
+
+pipelineTemplate(
+    repo: 'https://github.com/toka863/service-c.git',
+    imageName: 'service-c',
+    imageTag: 'v1',
+    port: '8084',
+    region: 'us-east-1',
+    accountId: '242201281496',
+    ecrRepo: 'service-c'
+)
+
