@@ -1,38 +1,64 @@
-#CI/CD Microservices Pipeline Project
-📌 Overview
+# 🚀 CI/CD Microservices Pipeline Project
 
-This project demonstrates an end-to-end CI/CD pipeline using Jenkins, Docker, and GitHub. It follows a multi-service architecture with a centralized Jenkins Shared Library to reuse pipeline logic.
+---
 
-#Architecture
+## 📌 Overview
+This project demonstrates an end-to-end CI/CD pipeline using Jenkins, Docker, and GitHub.  
+It follows a multi-service architecture with a centralized Jenkins Shared Library to reuse pipeline logic.
 
-#Tech Stack
-Jenkins (CI/CD automation)
-Docker (containerization)
-GitHub (source control)
-Maven (build tool)
-Linux environment
+---
 
-#Project Structure
-service-a/  
-service-b/  
-service-c/  
-shared-library/  
-architecture/  
+## 🏗️ Architecture
+
+> Add your architecture image here:
+
+
+---
+
+## 🧰 Tech Stack
+- Jenkins → CI/CD automation  
+- Docker → Containerization  
+- GitHub → Source control  
+- Maven → Build tool  
+- Linux → Deployment environment  
+
+---
+
+## 📁 Project Structure
+service-a/
+service-b/
+service-c/
+shared-library/
+architecture/
 docs/
-⚙️ Jenkins Shared Library
 
+
+---
+
+## ⚙️ Jenkins Shared Library
 A centralized pipeline library is used to:
+- Build applications  
+- Run tests  
+- Build Docker images  
 
-Build applications
-Run tests
-Build Docker images
+This reduces duplication and improves maintainability across services.
 
-This reduces duplication across services and improves maintainability.
+---
 
-#CI/CD Flow
-Code pushed to GitHub
-Jenkins triggers pipeline
-Build stage (Maven)
-Test stage (JUnit)
-Docker image build
-Deployment
+## 🔄 CI/CD Flow
+1. Code pushed to GitHub  
+2. Jenkins triggers pipeline  
+3. Build stage (Maven)  
+4. Test stage (JUnit)  
+5. Docker image build  
+6. Deployment  
+
+---
+
+## 🚀 Key Features
+- Multi-service architecture  
+- Reusable Jenkins Shared Library  
+- Automated CI/CD pipeline  
+- Dockerized applications  
+- Clean DevOps workflow  
+
